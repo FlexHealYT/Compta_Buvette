@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Erreur serveur</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../admin.css">
+    <script src="../src/theme.js"></script>
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 0;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .error-description {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        body.dark-theme .error-description {
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switch">
+        <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+        <label for="theme-toggle">🌙</label>
+    </div>
+
+    <div class="container">
+        <div class="error-container">
+            <h1 class="error-code">500</h1>
+            <h2 class="error-message">Erreur serveur</h2>
+            <p class="error-description">Une erreur interne s'est produite. Veuillez réessayer plus tard.</p>
+            <button class="back-btn" onclick="window.location.href='/concours/projet'">
+                Retour à l'accueil
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

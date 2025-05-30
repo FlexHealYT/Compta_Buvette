@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscription</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="admin.css" />
+    <script src="src/theme.js"></script>
+  </head>
+  <body>
+    <div class="theme-switch">
+      <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" />
+      <label for="theme-toggle">🌙</label>
+    </div>
+
+    <div class="login-container" id="login-container">
+      <button class="back-btn" onclick="window.location.href='index.html'">
+        ← Retour
+      </button>
+      <h2>Inscription</h2>
+      <div>
+        <p id="incorrect"></p>
+        <div class="input-group password-container">
+          <label for="password">Mot de passe :</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Votre mot de passe..."
+            required
+          />
+          <button
+            type="button"
+            class="toggle-password"
+            aria-label="Afficher ou masquer le mot de passe"
+            onclick="togglePassword('password')"
+          >
+            👁
+          </button>
+        </div>
+
+        <button type="button" id="login" onclick="check()">Se connecter</button>
+      </div>
+    </div>
+
+    <!-- Menu après connexion -->
+    <div id="menu-container">
+      <div class="button-container">
+        <button class="back-btn" onclick="window.location.href='index.html'">
+          ← Retour
+        </button>
+        <button class="back-btn" onclick="window.location.href='order.php'">
+          Commandes
+        </button>
+        <button class="logout-btn" onclick="logout()">Se déconnecter</button>
+      </div>
+      <div id="menu"></div>
+      <div id="selected" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          const loginForm = document.getElementById("login-container");
+          if (loginForm && loginForm.style.display !== "none") {
+            check();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
