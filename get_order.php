@@ -12,7 +12,7 @@ else {
     $orders = explode("\n", $allOrders);
     
     foreach ($orders as $order) {
-        if (!empty(trim($order)) && $order[0] === $_GET['id']) {
+        if (!empty(trim($order)) && explode(' - ', $order)[0] === $_GET['id']) {
             $order = rtrim($order, ',');
             break;
         }

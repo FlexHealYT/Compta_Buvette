@@ -436,6 +436,34 @@ h2 {
   background-color: #27ae60;
 }
 
+/* Élément soda */
+.hotdog-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.hotdog-item span {
+  font-size: 16px;
+}
+
+.hotdog-item button {
+  background-color: #2ecc71;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.hotdog-item button:hover {
+  background-color: #27ae60;
+}
+
 /* Croix de fermeture */
 .close-button {
   position: absolute;
@@ -482,6 +510,33 @@ body.dark-theme .sandwich-item {
 }
 
 body.dark-theme .sandwich-item button {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+body.dark-theme .ct-item {
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme .ct-item button {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+body.dark-theme .crepe-item {
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme .crepe-item button {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+body.dark-theme .hotdog-item {
+  border-bottom: 1px solid #444;
+}
+
+body.dark-theme .hotdog-item button {
   background-color: #27ae60;
   color: #fff;
 }

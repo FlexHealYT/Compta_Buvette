@@ -54,6 +54,24 @@
     let soundIcon = document.getElementById("soundIcon");
     let soundToggle = document.getElementById("soundToggle");
     let orders = "";
+    let customColors = {}; // Variable pour stocker les couleurs personnalisées
+
+    // Charger les couleurs personnalisées au démarrage
+    async function loadCustomColors() {
+        try {
+            const response = await fetch('colors.json');
+            if (response.ok) {
+                customColors = await response.json();
+            } else {
+                console.error('Erreur lors du chargement des couleurs personnalisées.');
+            }
+        } catch (error) {
+            console.error('Erreur réseau lors du chargement des couleurs:', error);
+        }
+    }
+
+    // Appeler loadCustomColors au chargement de la page
+    document.addEventListener('DOMContentLoaded', loadCustomColors);
 
     async function updateOrders() {
         try {
@@ -98,8 +116,32 @@
         fetch(`get_order.php?id=${orderID}`)
             .then(response => response.text())
             .then(data => {
-                data = data.slice(4);
+                data = data.slice(data.indexOf('-') + 2);
                 data = data.split(", ");
+
+                // Function to get item category for sorting
+                function getItemCategory(item) {
+                    item = item.toLowerCase();
+                    if (item.includes('hot-dog') || item.includes('sandwich')) return 1; // Snacks first
+                    if (item.includes('crêpe')) return 2; // Desserts second
+                    if (item.includes('eau') || item.includes('soda') || item.includes('café') || item.includes('thé')) return 3; // Beverages last
+                    return 4; // Other items at the end
+                }
+
+                // Sort the items by category
+                data.sort((a, b) => {
+                    const categoryA = getItemCategory(a);
+                    const categoryB = getItemCategory(b);
+                    return categoryA - categoryB;
+                });
+
+                function getItemColor(item) {
+                    item = item.toLowerCase();
+                    if (item.includes('crêpe')) return customColors.crepes || '#add8e6';
+                    if (item.includes('eau') || item.includes('soda') || item.includes('café') || item.includes('thé')) return customColors.drinks || '#ffb6c1';
+                    if (item.includes('hot-dog') || item.includes('sandwich')) return customColors.hotdogs_sandwiches || '#90ee90';
+                    return '';
+                }
 
                 let selected = document.getElementById("selected");
                 if (document.getElementById("selectedOrder")) return;
@@ -116,12 +158,18 @@
                 `;
                 selected.appendChild(order);
 
-                for (const item in data) {
-                    let div = document.createElement("div");
-                    div.class = 'item'
-                    div.innerHTML = `<span>${data[item]}</span>`
-                    document.getElementById("item-container").appendChild(div)
-                }
+                data.forEach(item => {
+                    const div = document.createElement("div");
+                    div.style.padding = "10px";
+                    div.style.margin = "8px";
+                    div.style.borderRadius = "15px"; // Coins plus arrondis
+                    div.style.boxShadow = "2px 8px 12px rgba(0, 0, 0, 0.4)"; // Ombre plus prononcée et décalée
+                    div.style.backgroundColor = getItemColor(item);
+                    div.style.color = "black"; // Couleur de texte noire
+                    div.style.textAlign = "center"; // Centrer le texte
+                    div.textContent = item;
+                    document.getElementById("item-container").appendChild(div);
+                });
 
                 window.addEventListener("click", (e) => {
                     const menu = document.getElementById("selectedOrder");

@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("connected") === "True") {
     document.title = "Page d'administration";
-    document.getElementById("selected").style.display = "none"
+    document.getElementById("selected").style.display = "none";
     document.getElementById("login-container").style.display = "none";
     document.getElementById("menu-container").style.display = "initial";
     loadMenu();
@@ -14,53 +14,66 @@ window.addEventListener("DOMContentLoaded", () => {
       const minusBtn = buttons.firstElementChild;
       const plusBtn = buttons.lastElementChild;
 
-      if (element === "Sandwich") { // Menu de selection
+      if (element === "Sandwich") {
+        // Menu de selection
         plusBtn.addEventListener("click", () => {
           Sandwich(true); // Menu de selection
         });
 
         minusBtn.addEventListener("click", () => {
-          Sandwich(false); // Menu de selection
+          closeMenu(); // Menu de selection
         });
       }
 
-      if (element === "Soda") { // Menu de selection
+      if (element === "Soda") {
+        // Menu de selection
         plusBtn.addEventListener("click", () => {
           Soda(true); // Menu de selection
         });
 
         minusBtn.addEventListener("click", () => {
-          Soda(false); // Menu de selection
+          closeMenu(); // Menu de selection
         });
       }
 
-      if (element === "Café ou Thé") { // Menu de selection
+      if (element === "Café ou Thé") {
+        // Menu de selection
         plusBtn.addEventListener("click", () => {
           CT(true); // Menu de selection
         });
 
         minusBtn.addEventListener("click", () => {
-          CT(false); // Menu de selection
+          closeMenu(); // Menu de selection
         });
       }
 
-      if (element === "Crêpes Nutella ou Confiture") { // Menu de selection
+      if (element === "Crêpes Nutella ou Confiture") {
+        // Menu de selection
         plusBtn.addEventListener("click", () => {
           Crepe(true); // Menu de selection
         });
 
         minusBtn.addEventListener("click", () => {
-          Crepe(false); // Menu de selection
+          closeMenu(); // Menu de selection
         });
       }
-
     }
   }
 });
 
+window.addEventListener("click", (e) => {
+  const menu = document.getElementById("selectedMenu");
+  const container = document.getElementById("selected");
+  if (menu && container && e.target === container) {
+    closeMenu(); // Menu de selection
+    container.style.display = "none";
+  }
+});
 
-function addSandwich(type) { // Menu de selection
-  if (counts["Sandwich"].count >= 0) { // Menu de selection
+function addSandwich(type) {
+  // Menu de selection
+  if (counts["Sandwich"].count >= 0) {
+    // Menu de selection
     counts["Sandwich"].count++; // Menu de selection
     document.getElementById("selected").style.display = "none";
     let menu = document.getElementById("selectedMenu");
@@ -78,19 +91,20 @@ function addSandwich(type) { // Menu de selection
   }
 }
 
-
-function addSoda(type) { // Menu de selection
-  if (counts["Soda"].count >= 0) { // Menu de selection
+function addSoda(type) {
+  // Menu de selection
+  if (counts["Soda"].count >= 0) {
+    // Menu de selection
     counts["Soda"].count++; // Menu de selection
     document.getElementById("selected").style.display = "none";
     let menu = document.getElementById("selectedMenu");
     if (menu) {
       menu.remove();
     }
-    document.getElementById("sodaCount").innerHTML = // Menu de selection
-      counts["Soda"].count; // Menu de selection
+    document.getElementById("sodaCount").innerHTML = counts["Soda"].count; // Menu de selection // Menu de selection
     updateTotal();
-    if (sodaData[type] !== undefined) { // Menu de selection
+    if (sodaData[type] !== undefined) {
+      // Menu de selection
       sodaData[type]++; // Menu de selection
     } else {
       sodaData[type] = 0; // Menu de selection
@@ -98,28 +112,31 @@ function addSoda(type) { // Menu de selection
   }
 }
 
-function addCT(type) { // Menu de selection
-  if (counts["Café ou Thé"].count >= 0) { // Menu de selection
+function addCT(type) {
+  // Menu de selection
+  if (counts["Café ou Thé"].count >= 0) {
+    // Menu de selection
     counts["Café ou Thé"].count++; // Menu de selection
     document.getElementById("selected").style.display = "none";
     let menu = document.getElementById("selectedMenu");
     if (menu) {
       menu.remove();
     }
-    document.getElementById("ctCount").innerHTML = // Menu de selection
-      counts["Café ou Thé"].count; // Menu de selection
-    updateTotal();
-    if (ctData[type] !== undefined) { // Menu de selection
+    document.getElementById("ctCount").innerHTML = counts["Café ou Thé"].count; // Menu de selection
+    if (ctData[type] !== undefined) {
+      // Menu de selection
       ctData[type]++; // Menu de selection
     } else {
-      ctData[type] = 0; // Menu de selection
+      ctData[type] = 1; // Menu de selection - initialiser à 1 au lieu de 0
     }
+    updateTotal(); // Mettre à jour le total immédiatement après la modification
   }
 }
 
-
-function addCrepe(type) { // Menu de selection
-  if (counts["Crêpes Nutella ou Confiture"].count >= 0) { // Menu de selection
+function addCrepe(type) {
+  // Menu de selection
+  if (counts["Crêpes Nutella ou Confiture"].count >= 0) {
+    // Menu de selection
     counts["Crêpes Nutella ou Confiture"].count++; // Menu de selection
     document.getElementById("selected").style.display = "none";
     let menu = document.getElementById("selectedMenu");
@@ -129,7 +146,8 @@ function addCrepe(type) { // Menu de selection
     document.getElementById("crepeCount").innerHTML = // Menu de selection
       counts["Crêpes Nutella ou Confiture"].count; // Menu de selection
     updateTotal();
-    if (crepeData[type] !== undefined) { // Menu de selection
+    if (crepeData[type] !== undefined) {
+      // Menu de selection
       crepeData[type]++; // Menu de selection
     } else {
       crepeData[type] = 0; // Menu de selection
@@ -137,7 +155,8 @@ function addCrepe(type) { // Menu de selection
   }
 }
 
-function Sandwich(add) { // Menu de selection
+function Sandwich(add) {
+  // Menu de selection
   let menu_container = document.getElementById("selected");
   if (add) {
     if (document.getElementById("selectedMenu")) return;
@@ -146,7 +165,7 @@ function Sandwich(add) { // Menu de selection
     let menu = document.createElement("div");
     menu.id = "selectedMenu";
     menu.innerHTML = `
-    <span class="close-button" onclick="Sandwich(false)">×</span>
+    <span class="close-button" onclick="closeMenu()">×</span>
 
     <h2>Quel sandwich voulez-vous ?</h2>
     <div class="sandwich">
@@ -160,25 +179,11 @@ function Sandwich(add) { // Menu de selection
       </div>
   `; // Menu de selection
     menu_container.appendChild(menu);
-  } else if (!add && counts["Sandwich"].count >= 0) { // Menu de selection
-    let menu = document.getElementById("selectedMenu");
-    if (menu) {
-      menu_container.removeChild(menu);
-      menu_container.style.display = "none";
-    }
   }
-
-  window.addEventListener("click", (e) => {
-    const menu = document.getElementById("selectedMenu");
-    const container = document.getElementById("selected");
-    if (menu && container && e.target === container) {
-      Sandwich(false); // Menu de selection
-      container.style.display = "none";
-    }
-  });
 }
 
-function CT(add) { // Menu de selection
+function CT(add) {
+  // Menu de selection
   let menu_container = document.getElementById("selected");
   if (add) {
     if (document.getElementById("selectedMenu")) return;
@@ -187,7 +192,7 @@ function CT(add) { // Menu de selection
     let menu = document.createElement("div");
     menu.id = "selectedMenu";
     menu.innerHTML = `
-    <span class="close-button" onclick="CT(false)">×</span>
+    <span class="close-button" onclick="closeMenu()">×</span>
 
     <h2>Café ou Thé ?</h2>
     <div class="ct">
@@ -201,25 +206,13 @@ function CT(add) { // Menu de selection
       </div>
   `; // Menu de selection
     menu_container.appendChild(menu);
-  } else if (!add && counts["Café ou Thé"].count >= 0) { // Menu de selection
-    let menu = document.getElementById("selectedMenu");
-    if (menu) {
-      menu_container.removeChild(menu);
-      menu_container.style.display = "none";
-    }
   }
 
-  window.addEventListener("click", (e) => {
-    const menu = document.getElementById("selectedMenu");
-    const container = document.getElementById("selected");
-    if (menu && container && e.target === container) {
-      CT(false); // Menu de selection
-      container.style.display = "none";
-    }
-  });
+
 }
 
-function Crepe(add) { // Menu de selection
+function Crepe(add) {
+  // Menu de selection
   let menu_container = document.getElementById("selected");
   if (add) {
     if (document.getElementById("selectedMenu")) return;
@@ -228,7 +221,7 @@ function Crepe(add) { // Menu de selection
     let menu = document.createElement("div");
     menu.id = "selectedMenu";
     menu.innerHTML = `
-    <span class="close-button" onclick="Crepe(false)">×</span>
+    <span class="close-button" onclick="closeMenu()">×</span>
 
     <h2>Crêpes Nutella ou Confiture ?</h2>
     <div class="crepe">
@@ -242,26 +235,13 @@ function Crepe(add) { // Menu de selection
       </div>
   `; // Menu de selection
     menu_container.appendChild(menu);
-  } else if (!add && counts["Crêpes Nutella ou Confiture"].count >= 0) { // Menu de selection
-    let menu = document.getElementById("selectedMenu");
-    if (menu) {
-      menu_container.removeChild(menu);
-      menu_container.style.display = "none";
-    }
   }
 
-  window.addEventListener("click", (e) => {
-    const menu = document.getElementById("selectedMenu");
-    const container = document.getElementById("selected");
-    if (menu && container && e.target === container) {
-      Crepe(false); // Menu de selection
-      container.style.display = "none";
-    }
-  });
+
 }
 
-
-function Soda(add) { // Menu de selection
+function Soda(add) {
+  // Menu de selection
   let menu_container = document.getElementById("selected");
   if (add) {
     if (document.getElementById("selectedMenu")) return;
@@ -270,7 +250,7 @@ function Soda(add) { // Menu de selection
     let menu = document.createElement("div");
     menu.id = "selectedMenu";
     menu.innerHTML = `
-    <span class="close-button" onclick="Soda(false)">×</span>
+    <span class="close-button" onclick="closeMenu()">×</span>
 
     <h2>Quel soda voulez-vous ?</h2>
     <div class="soda">
@@ -288,22 +268,18 @@ function Soda(add) { // Menu de selection
       </div>
   `; // Menu de selection
     menu_container.appendChild(menu);
-  } else if (!add && counts["Soda"].count >= 0) { // Menu de selection
-    let menu = document.getElementById("selectedMenu");
-    if (menu) {
-      menu_container.removeChild(menu);
-      menu_container.style.display = "none";
-    }
   }
 
-  window.addEventListener("click", (e) => {
-    const menu = document.getElementById("selectedMenu");
-    const container = document.getElementById("selected");
-    if (menu && container && e.target === container) {
-      Soda(false); // Menu de selection
-      container.style.display = "none";
-    }
-  });
+
+}
+
+function closeMenu() {
+  let menu = document.getElementById("selectedMenu");
+  let menu_container = document.getElementById("selected");
+  if (menu) {
+    menu_container.removeChild(menu);
+    menu_container.style.display = "none";
+  }
 }
 
 function logout() {
@@ -375,18 +351,24 @@ const menuData = {
   },
 };
 
-
 const sandwichData = { Jambon: 0, Fromage: 0 }; // Menu de selection
-const sodaData = { Oasis: 0, Coca: 0, "Ice_Tea": 0}; // Menu de selection
-const ctData = { Café: 0, Thé: 0}; // Menu de selection
-const crepeData = { Nutella: 0, Confiture: 0}; // Menu de selection
+const sodaData = { Oasis: 0, Coca: 0, Ice_Tea: 0 }; // Menu de selection
+const ctData = { Café: 0, Thé: 0 }; // Menu de selection
+const crepeData = { Nutella: 0, Confiture: 0 }; // Menu de selection
+const hotDogData = { Ketchup: 0, Mayo: 0 }; // Menu de selection
 
 const counts = {};
 
 function updateTotal() {
   let total = 0;
   for (const item in counts) {
-    total += counts[item].count * counts[item].price;
+    if (item === "Café ou Thé") {
+      // Gestion des prix individuels pour le café et le thé
+      total += ctData["Café"] * 1.0; // Prix du café à 1.0€
+      total += ctData["Thé"] * 0.5;  // Prix du thé à 0.5€
+    } else {
+      total += counts[item].count * counts[item].price;
+    }
   }
   document.getElementById("total").textContent = `Total : ${total
     .toFixed(2)
@@ -415,25 +397,25 @@ function createItem(name, price) {
     }
   };
 
-
-
- 
   const plusBtn = document.createElement("button");
   plusBtn.textContent = "+";
   plusBtn.onclick = () => {
-    if (name === "Sandwich"){ // Menu de selection
+    if (name === "Sandwich") {
+      // Menu de selection
       Sandwich(true);
-    }
-    else if (name === "Soda"){ // Menu de selection
+    } else if (name === "Soda") {
+      // Menu de selection
       Soda(true);
-    }    
-    else if (name === "Café ou Thé"){ // Menu de selection
+    } else if (name === "Café ou Thé") {
+      // Menu de selection
       CT(true);
-    }
-    else if (name === "Crêpes Nutella ou Confiture"){ // Menu de selection
+    } else if (name === "Crêpes Nutella ou Confiture") {
+      // Menu de selection
       Crepe(true);
-    }
-    else {
+    } else if (name === "Hot-Dog") {
+      // Menu de selection
+      HotDog(true);
+    } else {
       counts[name].count++;
       countDiv.textContent = counts[name].count;
       updateTotal();
@@ -444,18 +426,25 @@ function createItem(name, price) {
   countDiv.className = "count";
   countDiv.textContent = "0";
 
- 
-  if (name === "Sandwich") { // Menu de selection
+  if (name === "Sandwich") {
+    // Menu de selection
     countDiv.id = "sandwichCount"; // Menu de selection
   }
-  if (name === "Soda") { // Menu de selection
+  if (name === "Soda") {
+    // Menu de selection
     countDiv.id = "sodaCount"; // Menu de selection
   }
-  if (name === "Café ou Thé") { // Menu de selection
+  if (name === "Café ou Thé") {
+    // Menu de selection
     countDiv.id = "ctCount"; // Menu de selection
   }
-  if (name === "Crêpes Nutella ou Confiture") { // Menu de selection
+  if (name === "Crêpes Nutella ou Confiture") {
+    // Menu de selection
     countDiv.id = "crepeCount"; // Menu de selection
+  }
+  if (name === "Hot-Dog") {
+    // Menu de selection
+    countDiv.id = "hotDogCount"; // Menu de selection
   }
 
   buttons.appendChild(minusBtn);
@@ -517,18 +506,26 @@ function cancelOrder() {
     counts[item].count = 0;
     updateTotal();
   }
-  
-  for (const item in sandwichData) { // Menu de selection
+
+  for (const item in sandwichData) {
+    // Menu de selection
     sandwichData[item] = 0; // Menu de selection
-  } 
-  for (const item in sodaData) { // Menu de selection
+  }
+  for (const item in sodaData) {
+    // Menu de selection
     sodaData[item] = 0; // Menu de selection
   }
-  for (const item in ctData) { // Menu de selection
+  for (const item in ctData) {
+    // Menu de selection
     ctData[item] = 0; // Menu de selection
   }
-  for (const item in crepeData) { // Menu de selection
+  for (const item in crepeData) {
+    // Menu de selection
     crepeData[item] = 0; // Menu de selection
+  }
+  for (const item in hotDogData) {
+    // Menu de selection
+    hotDogData[item] = 0; // Menu de selection
   }
 
   const counters = document.getElementsByClassName("count");
@@ -537,11 +534,22 @@ function cancelOrder() {
   }
 }
 
+function validateOrder(orderID) {
+  let menu_container = document.getElementById("selected");
+  if (document.getElementById("selectedMenu")) return;
+  // On crée le menu
+  menu_container.style.display = "initial";
+  let menu = document.createElement("div");
+  menu.id = "selectedMenu";
+  menu.innerHTML = `
+    <span class="close-button" onclick="closeMenu()">×</span>
+    <h2>Commande numéro ${orderID} validée</h2>`; // Menu de selection
+  menu_container.appendChild(menu);
+}
+
 function confirmOrder() {
-  let url = "calc_compta.php?";
-  let request = '';
-  
- 
+  let request = "";
+
   // Ajouter les commandes normales
   for (const item in counts) {
     if (counts[item].count === 0) continue;
@@ -549,42 +557,116 @@ function confirmOrder() {
     if (item === "Soda") continue; // Menu de selection
     if (item === "Café ou Thé") continue; // Menu de selection
     if (item === "Crêpes Nutella ou Confiture") continue; // Menu de selection
+    if (item === "Hot-Dog") continue; // Menu de selection
     const param = item.replace(/ /g, "_");
     request += `${param}=${counts[item].count}&`;
   }
-  
- 
+
   // Ajouter les sandwiches
-  for (const item in sandwichData) { // Menu de selection
+  for (const item in sandwichData) {
+    // Menu de selection
     if (sandwichData[item] === 0) continue; // Menu de selection
     request += `Sandwich_${item}=${sandwichData[item]}&`; // Menu de selection
   }
 
-  for (const item in sodaData) { // Menu de selection
+  for (const item in sodaData) {
+    // Menu de selection
     if (sodaData[item] === 0) continue; // Menu de selection
     request += `Soda_${item}=${sodaData[item]}&`; // Menu de selection
   }
 
-  for (const item in ctData) { // Menu de selection
+  for (const item in ctData) {
+    // Menu de selection
     if (ctData[item] === 0) continue; // Menu de selection
     request += `${item}=${ctData[item]}&`; // Menu de selection
   }
-  for (const item in crepeData) { // Menu de selection
+  for (const item in crepeData) {
+    // Menu de selection
     if (crepeData[item] === 0) continue; // Menu de selection
     request += `Crêpe_${item}=${crepeData[item]}&`; // Menu de selection
   }
+  for (const item in hotDogData) {
+    // Menu de selection
+    if (hotDogData[item] === 0) continue; // Menu de selection
+    request += `Hot-Dog_${item}=${hotDogData[item]}&`; // Menu de selection
+  }
 
   // Envoyer les commandes
-  fetch(url + request);
-  fetch('add_order.php?' + request.slice(0, -1)) // Enlever le dernier &
-    .then(response => {
+  fetch("calc_compta.php?" + request);
+  fetch("add_order.php?" + request) // Enlever le dernier &
+    .then((response) => {
       if (!response.ok) {
-        console.error('Erreur lors de l\'ajout de la commande');
+        console.error("Erreur lors de l'ajout de la commande");
+      } else {
+        return response.text();
       }
     })
-    .catch(error => {
-      console.error('Erreur:', error);
+    .then((text) => {
+      if (text !== undefined) {
+        let i = 0;
+        text = text.split("<br />\n");
+        for (const item in text) {
+          text[item] = text[item].split(" - ");
+        }
+        i = text[text.length - 2][0]; // Prends l'avant derniere valeur des commandes (saute le '') puis la premiere valeur de ca (l'indice)
+        validateOrder(i)
+      }
+    })
+    .catch((error) => {
+      console.error("Erreur:", error);
     });
-    
+
   cancelOrder();
+}
+
+function addHotDog(type) {
+  // Menu de selection
+  if (counts["Hot-Dog"].count >= 0) {
+    // Menu de selection
+    counts["Hot-Dog"].count++; // Menu de selection
+    document.getElementById("selected").style.display = "none";
+    let menu = document.getElementById("selectedMenu");
+    if (menu) {
+      menu.remove();
+    }
+    document.getElementById("hotDogCount").innerHTML = counts["Hot-Dog"].count; // Menu de selection
+    updateTotal();
+    if (hotDogData[type] !== undefined) {
+      // Menu de selection
+      hotDogData[type]++; // Menu de selection
+    } else {
+      hotDogData[type] = 0; // Menu de selection
+    }
+  }
+}
+
+function HotDog(add) {
+  // Menu de selection
+  let menu_container = document.getElementById("selected");
+  if (add) {
+    if (document.getElementById("selectedMenu")) return;
+    // On crée le menu
+    menu_container.style.display = "initial";
+    let menu = document.createElement("div");
+    menu.id = "selectedMenu";
+    menu.innerHTML = `
+    <span class="close-button" onclick="closeMenu()">×</span>
+
+    <h2>Ketchup / Mayo / Moutarde ?</h2>
+    <div class="hotdog">
+      <div class="hotdog-item">
+        <span>Ketchup</span>
+        <button onclick="addHotDog('Ketchup')">+</button>
+      </div>
+      <div class="hotdog-item">
+        <span>Mayo</span>
+        <button onclick="addHotDog('Mayo')">+</button>
+      </div>
+      <div class="hotdog-item">
+        <span>Moutarde</span>
+        <button onclick="addHotDog('Moutarde')">+</button>
+      </div>
+  `; // Menu de selection
+    menu_container.appendChild(menu);
+  }
 }
